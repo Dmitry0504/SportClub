@@ -1,46 +1,50 @@
 package model;
 
+import javafx.beans.property.*;
+
 import java.sql.Date;
 
 public class Contract {
-    private int number;
-    private int partner;
-    private String description;
+    private IntegerProperty number;
+    private IntegerProperty partner;
+    private StringProperty description;
     private Date conclusion;
     private Date ending;
-    private double cost;
+    private DoubleProperty cost;
 
-    public Contract(int number, int partner, String description, Date conclusion, Date ending, double cost) {
-        this.number = number;
-        this.partner = partner;
-        this.description = description;
+    public Contract(
+            int number, int partner, String description,
+            Date conclusion, Date ending, double cost) {
+        this.number = new SimpleIntegerProperty(number);
+        this.partner = new SimpleIntegerProperty(partner);
+        this.description = new SimpleStringProperty(description);
         this.conclusion = conclusion;
         this.ending = ending;
-        this.cost = cost;
+        this.cost = new SimpleDoubleProperty(cost);
     }
 
     public int getNumber() {
-        return number;
+        return number.getValue();
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.number = new SimpleIntegerProperty(number);
     }
 
     public int getPartner() {
-        return partner;
+        return partner.getValue();
     }
 
     public void setPartner(int partner) {
-        this.partner = partner;
+        this.partner = new SimpleIntegerProperty(partner);
     }
 
     public String getDescription() {
-        return description;
+        return description.toString();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = new SimpleStringProperty(description);
     }
 
     public Date getConclusion() {
@@ -60,10 +64,10 @@ public class Contract {
     }
 
     public double getCost() {
-        return cost;
+        return cost.doubleValue();
     }
 
     public void setCost(double cost) {
-        this.cost = cost;
+        this.cost = new SimpleDoubleProperty(cost);
     }
 }

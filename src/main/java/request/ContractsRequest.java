@@ -1,16 +1,30 @@
 package request;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Contract;
+import sample.AlertWindow;
 import sample.Controller;
+import sample.Main;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class ContractsRequest {
@@ -88,7 +102,31 @@ public class ContractsRequest {
         cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
         tableView.getColumns().add(cost);
 
-        tableView.setPrefWidth(573);
+        tableView.setPrefWidth(500);
+
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/additionalScenes/editContract.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = fxmlLoader.load();
+                            Stage addStage = new Stage();
+                            addStage.initModality(Modality.WINDOW_MODAL);
+                            addStage.setTitle("Изменение договора");
+                            addStage.setScene(new Scene(root1));
+                            addStage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+        });
+
         return tableView;
     }
 }

@@ -2,7 +2,7 @@ package sample;
 
 import javafx.scene.control.Alert;
 
-public class DialogWindow {
+public class AlertWindow {
 
     // Show a Information Alert with header Text
     public static void showAlertWithHeaderText() {
@@ -28,7 +28,7 @@ public class DialogWindow {
     // Show a Information Alert without Header Text
     public static void showAlertWithoutHeaderText(String text) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Test Connection");
+        alert.setTitle("Информация");
 
         // Header Text: null
         alert.setHeaderText(null);

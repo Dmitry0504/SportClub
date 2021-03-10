@@ -15,9 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Trainer;
+import request.StandardRequest;
 
 public class NewContractController {
     private static Connection connection = Controller.getConnection();
@@ -141,12 +140,14 @@ public class NewContractController {
 
                 preparedStatement.close();
 
-                DialogWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
+                AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
+                //StandardRequest.refreshAll();
+                //Controller.refreshConnection();
                 //возвращаемся на предыдущую страницу
                 returnToPrevStage();
             } catch (SQLException e) {
                 e.printStackTrace();
-                DialogWindow.showAlertWithoutHeaderText("Если вы видете это сообщение, то обратитесь к администратору!");
+                AlertWindow.showAlertWithoutHeaderText("Если вы видете это сообщение, то обратитесь к администратору!");
             }
         }
     }
@@ -171,25 +172,25 @@ public class NewContractController {
         //проверка данных контрагента
         String partnerSurname = contragentSurname.getText().trim();
         if(!partnerSurname.matches("^\\D+\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Фамилия' контрагента!\nПоле не должно содержать цифр!");
             return false;
         }
         String partnerName = contragentName.getText();
         if(!partnerName.matches("^\\D+\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Имя' контрагента!\nПоле не должно содержать цифр!");
             return false;
         }
         String partnerBirthday = contragentBirthday.getText();
         if(!partnerBirthday.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Дата рождения' контрагента!\nДата должна быть в формате - гггг-мм-дд!");
             return false;
         }
         String partnerTelephone = contagentTelephone.getText();
         if(!partnerTelephone.matches("^\\d{11}$")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Телефон' контрагента!\nНомер должен содержать 11 цифр и не может содержать спецсимволов!");
             return false;
         }
@@ -197,25 +198,25 @@ public class NewContractController {
         //проверка данных о договоре
         String description = contractDescription.getText();
         if(description.isEmpty()){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Поле 'Описание' не должно быть пустым!");
             return false;
         }
         String conclusion = contractConclusion.getText();
         if(!conclusion.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Дата начала'!\nДата должна быть в формате - гггг-мм-дд!");
             return false;
         }
         String ending = contractEnding.getText();
         if(!ending.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Дата окончания'!\nДата должна быть в формате - гггг-мм-дд!");
             return false;
         }
         String cost = contractCost.getText();
         if(!cost.matches("^\\d+\\.?\\d*$")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Стоимость'!\nПоле не должно содержать букв и спецсимволов, кроме '.'!");
             return false;
         }
@@ -223,25 +224,25 @@ public class NewContractController {
         //проверка данных о спортсмене
         String sportsmanLastName = sportsmanSurname.getText();
         if(!sportsmanLastName.matches("^\\D+\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Фамилия' спортсмена!\nПоле не должно содержать цифр!");
             return false;
         }
         String sportsmanFirstName = sportsmanName.getText();
         if(!sportsmanFirstName.matches("^\\D+\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Имя' спортсмена!\nПоле не должно содержать цифр!");
             return false;
         }
         String sportsmanBD = sportsmanBirthday.getText();
         if(!sportsmanBD.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\d\\b")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Дата рождения' спортсмена!\nДата должна быть в формате - гггг-мм-дд!");
             return false;
         }
         String sportsmanTel = sportsmanTelephone.getText();
         if(!sportsmanTel.matches("^\\d{11}$")){
-            DialogWindow.showAlertWithoutHeaderText(
+            AlertWindow.showAlertWithoutHeaderText(
                     "Проверьте поле 'Телефон' спортсмена!\nНомер должен содержать 11 цифр и не может содержать спецсимволов!");
             return false;
         }

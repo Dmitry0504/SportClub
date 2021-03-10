@@ -10,22 +10,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Controller {
+    private static String login;
+    private static String password;
 
     private static Connection connection;
 
@@ -50,13 +47,15 @@ public class Controller {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        login = inputLogin.getText();
+        password = inputPassword.getText();
 
         nextBtn.setOnAction(actionEvent -> {
 
             try {
-                connection = Connector.getNewConnection();
+                connectBD();
             } catch (SQLException e) {
-                DialogWindow.showAlertWithoutHeaderText("Проверьте введенные данные!");
+                AlertWindow.showAlertWithoutHeaderText("Проверьте введенные данные!");
                 return;
             }
 
@@ -78,5 +77,18 @@ public class Controller {
 
     }
 
+    private static void connectBD() throws SQLException {
+        if(connection != null)
+            connection.close();
+        connection = Connector.getNewConnection();
+    }
+
+    public static void refreshConnection(){
+        try {
+            connectBD();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

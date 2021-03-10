@@ -18,7 +18,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Contract;
 import request.StandardRequest;
+import sample.edit_controller.EditContractController;
 
 public class MainSceneController {
 
@@ -56,14 +58,14 @@ public class MainSceneController {
         TreeItem<String> root = new TreeItem<>("Спортклуб");
         root.setExpanded(true);
         root.getChildren().addAll(
-                contracts, partners, sportsmen, trainers, exercise, timetable
-        );
+                contracts, partners, sportsmen, trainers, exercise, timetable);
         treeView.setRoot(root);
 
 
         treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
             @Override
             public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+
                 switch (t1.getValue()){
                     case "Контрагенты":
                         ouputLayout.getChildren().clear();
@@ -71,7 +73,11 @@ public class MainSceneController {
                         break;
                     case "Договоры":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getContractTableView());
+                        TableView<Contract> tb = StandardRequest.getContractTableView();
+                        ouputLayout.getChildren().add(tb);
+                        Contract contract = tb.getSelectionModel().getSelectedItem();
+                        EditContractController.setNumber(contract.getNumber());
+                        AlertWindow.showAlertWithoutHeaderText(""+contract.getNumber());
                         break;
                     case "Члены клуба":
                         ouputLayout.getChildren().clear();
@@ -93,20 +99,18 @@ public class MainSceneController {
                         ouputLayout.getChildren().clear();
                         break;
                 }
-
             }
         });
 
         addBtn.setOnAction(actionEvent -> {
             Stage stage = (Stage) addBtn.getScene().getWindow();
-            stage.hide();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addingScene.fxml"));
             Parent root1;
             try {
                 root1 = fxmlLoader.load();
-                stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setTitle("Спортклуб");
+                Stage addStage = new Stage();
+                addStage.initModality(Modality.WINDOW_MODAL);
+                addStage.setTitle("Создание нового договора");
                 stage.setScene(new Scene(root1));
                 stage.show();
             } catch (IOException e) {
@@ -114,7 +118,9 @@ public class MainSceneController {
             }
         });
 
+        deleteBtn.setOnAction(actionEvent -> {
 
+        });
     }
-    
+
 }
