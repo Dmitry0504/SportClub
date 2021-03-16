@@ -83,12 +83,4 @@ public class Controller {
         connection = Connector.getNewConnection();
     }
 
-    public static void refreshConnection(){
-        try {
-            connectBD();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

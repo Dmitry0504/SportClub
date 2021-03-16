@@ -6,11 +6,10 @@ package sample.edit_controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
+
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,10 +19,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Contract;
+import request.ContractsRequest;
 import request.StandardRequest;
 import sample.AlertWindow;
 import sample.Controller;
 import sample.Main;
+import sample.MainSceneController;
 
 public class EditContractController {
     private static int i;
@@ -85,9 +87,9 @@ public class EditContractController {
 
                 preparedStatement.close();
 
+                MainSceneController.standardRequest.refreshContractTableView();
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно обновлены!");
-                //StandardRequest.refreshAll();
-                //Controller.refreshConnection();
+
 
                 stage.close();
             } catch (SQLException e) {

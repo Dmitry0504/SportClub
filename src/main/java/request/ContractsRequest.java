@@ -1,7 +1,5 @@
 package request;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -14,15 +12,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Contract;
-import sample.AlertWindow;
 import sample.Controller;
-import sample.Main;
+import sample.edit_controller.EditContractController;
 
 import java.io.IOException;
 import java.sql.*;
@@ -30,13 +26,12 @@ import java.sql.*;
 public class ContractsRequest {
     private static Connection connection = Controller.getConnection();
 
-    private static ObservableList<Contract> contracts = FXCollections.observableArrayList();
+    private ObservableList<Contract> contracts = FXCollections.observableArrayList();
 
-    private static ObservableList<Contract> getContracts(){
+    private ObservableList<Contract> createContracts(){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM contracts ORDER BY number");
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM contracts ORDER BY number");
 
             while (resultSet.next()){
                 contracts.add(new Contract(
@@ -55,8 +50,9 @@ public class ContractsRequest {
         return contracts;
     }
 
-    static TableView<Contract> createTBContracts(){
-        TableView<Contract> tableView = new TableView<>(getContracts());
+    TableView<Contract> createTBContracts(){
+        ObservableList<Contract> list = createContracts();
+        TableView<Contract> tableView = new TableView<>(list);
 
         TableColumn<Contract, Integer> id = new TableColumn<>("Номер");
         id.setCellValueFactory(new PropertyValueFactory<>("number"));
@@ -108,6 +104,10 @@ public class ContractsRequest {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 1){
+                        int i = tableView.getSelectionModel().getSelectedItem().getNumber();
+                        EditContractController.setNumber(i);
+                    }
                     if(mouseEvent.getClickCount() == 2){
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/additionalScenes/editContract.fxml"));
                         Parent root1;

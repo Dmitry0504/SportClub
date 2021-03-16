@@ -27,23 +27,23 @@ public class StandardRequest {
 
     private static TableView<TimeTable> timeTableTableView = TimeTableRequest.createTBTimeTable();
 
-    private static TableView<Contract> contractTableView = ContractsRequest.createTBContracts();
+    private TableView<Contract> contractTableView = new ContractsRequest().createTBContracts();
 
-    public static void refreshAll(){
-        refreshContractTableView();
-        refreshExerciseTableView();
-        refreshTimeTableTableView();
-        refreshPartnerTableView();
-        refreshSportsmanTableView();
-        refreshTrainerTableView();
-    }
+//    public static void refreshAll(){
+//        refreshContractTableView();
+//        refreshExerciseTableView();
+//        refreshTimeTableTableView();
+//        refreshPartnerTableView();
+//        refreshSportsmanTableView();
+//        refreshTrainerTableView();
+//    }
 
     private static void refreshTimeTableTableView() {
         timeTableTableView = TimeTableRequest.createTBTimeTable();
     }
 
-    private static void refreshContractTableView() {
-        contractTableView = ContractsRequest.createTBContracts();
+    public void refreshContractTableView() {
+        contractTableView = new ContractsRequest().createTBContracts();
     }
 
     private static void refreshSportsmanTableView() {
@@ -62,7 +62,7 @@ public class StandardRequest {
         partnerTableView = PartnerRequest.createTBPartners();
     }
 
-    public static TableView<Contract> getContractTableView() {
+    public TableView<Contract> getContractTableView() {
         return contractTableView;
     }
 

@@ -18,11 +18,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Contract;
 import request.StandardRequest;
-import sample.edit_controller.EditContractController;
 
 public class MainSceneController {
+
+    public static StandardRequest standardRequest = new StandardRequest();
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -45,8 +45,9 @@ public class MainSceneController {
     @FXML // fx:id="deleteBtn"
     private Button deleteBtn; // Value injected by FXMLLoader
 
+    private TableView<?> tb;
 
-
+    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         TreeItem<String> partners = new TreeItem<>("Контрагенты");
@@ -69,31 +70,33 @@ public class MainSceneController {
                 switch (t1.getValue()){
                     case "Контрагенты":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getPartnerTableView());
+                        tb = StandardRequest.getPartnerTableView();
+                        ouputLayout.getChildren().add(tb);
                         break;
                     case "Договоры":
                         ouputLayout.getChildren().clear();
-                        TableView<Contract> tb = StandardRequest.getContractTableView();
+                        tb = new StandardRequest().getContractTableView();
                         ouputLayout.getChildren().add(tb);
-                        Contract contract = tb.getSelectionModel().getSelectedItem();
-                        EditContractController.setNumber(contract.getNumber());
-                        AlertWindow.showAlertWithoutHeaderText(""+contract.getNumber());
                         break;
                     case "Члены клуба":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getSportsmanTableView());
+                        tb = StandardRequest.getSportsmanTableView();
+                        ouputLayout.getChildren().add(tb);
                         break;
                     case "Тренеры":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getTrainerTableView());
+                        tb = StandardRequest.getTrainerTableView();
+                        ouputLayout.getChildren().add(tb);
                         break;
                     case "Занятия":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getExerciseTableView());
+                        tb = StandardRequest.getExerciseTableView();
+                        ouputLayout.getChildren().add(tb);
                         break;
                     case "Расписание":
                         ouputLayout.getChildren().clear();
-                        ouputLayout.getChildren().add(StandardRequest.getTimeTableTableView());
+                        tb = StandardRequest.getTimeTableTableView();
+                        ouputLayout.getChildren().add(tb);
                         break;
                     default:
                         ouputLayout.getChildren().clear();
