@@ -57,6 +57,7 @@ public class EditContractController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        setTextInput();
         acceptBtn.setOnAction(actionEvent -> {
             editContract();
         });
@@ -133,6 +134,17 @@ public class EditContractController {
 
     public static void setNumber(int x){
         i = x;
+    }
+
+    private void setTextInput(){
+        contractDescription.setText(
+                MainSceneController.standardRequest.getContractTableView().getSelectionModel().getSelectedItem().getDescription());
+        contractConclusion.setText(
+                MainSceneController.standardRequest.getContractTableView().getSelectionModel().getSelectedItem().getConclusion().toString());
+        contractEnding.setText(
+                MainSceneController.standardRequest.getContractTableView().getSelectionModel().getSelectedItem().getEnding().toString());
+        contractCost.setText(String.valueOf(
+                MainSceneController.standardRequest.getContractTableView().getSelectionModel().getSelectedItem().getCost()));
     }
 
 }

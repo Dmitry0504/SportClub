@@ -17,9 +17,9 @@ import java.util.Date;
 public class SportsmenRequest {
     private static Connection connection = Controller.getConnection();
 
-    private static ObservableList<Sportsman> sportsmen = FXCollections.observableArrayList();
+    private ObservableList<Sportsman> sportsmen = FXCollections.observableArrayList();
 
-    private static ObservableList<Sportsman> getSportsmen(){
+    private ObservableList<Sportsman> getSportsmen(){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sportsmen ORDER BY id");
 
@@ -41,7 +41,7 @@ public class SportsmenRequest {
         return sportsmen;
     }
 
-    static TableView<Sportsman> createTBSportsmen(){
+    TableView<Sportsman> createTBSportsmen(){
         TableView<Sportsman> tableView = new TableView<>(getSportsmen());
 
         TableColumn<Sportsman, Integer> id = new TableColumn<>("id");

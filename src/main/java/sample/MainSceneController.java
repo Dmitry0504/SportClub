@@ -70,32 +70,32 @@ public class MainSceneController {
                 switch (t1.getValue()){
                     case "Контрагенты":
                         ouputLayout.getChildren().clear();
-                        tb = StandardRequest.getPartnerTableView();
+                        tb = standardRequest.getPartnerTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     case "Договоры":
                         ouputLayout.getChildren().clear();
-                        tb = new StandardRequest().getContractTableView();
+                        tb = standardRequest.getContractTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     case "Члены клуба":
                         ouputLayout.getChildren().clear();
-                        tb = StandardRequest.getSportsmanTableView();
+                        tb = standardRequest.getSportsmanTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     case "Тренеры":
                         ouputLayout.getChildren().clear();
-                        tb = StandardRequest.getTrainerTableView();
+                        tb = standardRequest.getTrainerTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     case "Занятия":
                         ouputLayout.getChildren().clear();
-                        tb = StandardRequest.getExerciseTableView();
+                        tb = standardRequest.getExerciseTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     case "Расписание":
                         ouputLayout.getChildren().clear();
-                        tb = StandardRequest.getTimeTableTableView();
+                        tb = standardRequest.getTimeTableTableView();
                         ouputLayout.getChildren().add(tb);
                         break;
                     default:

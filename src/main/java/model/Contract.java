@@ -5,46 +5,46 @@ import javafx.beans.property.*;
 import java.sql.Date;
 
 public class Contract {
-    private IntegerProperty number;
-    private IntegerProperty partner;
-    private StringProperty description;
+    private int number;
+    private int partner;
+    private String description;
     private Date conclusion;
     private Date ending;
-    private DoubleProperty cost;
+    private double cost;
 
     public Contract(
             int number, int partner, String description,
             Date conclusion, Date ending, double cost) {
-        this.number = new SimpleIntegerProperty(number);
-        this.partner = new SimpleIntegerProperty(partner);
-        this.description = new SimpleStringProperty(description);
+        this.number = number;
+        this.partner = partner;
+        this.description = description;
         this.conclusion = conclusion;
         this.ending = ending;
-        this.cost = new SimpleDoubleProperty(cost);
+        this.cost = cost;
     }
 
     public int getNumber() {
-        return number.getValue();
+        return number;
     }
 
     public void setNumber(int number) {
-        this.number = new SimpleIntegerProperty(number);
+        this.number = number;
     }
 
     public int getPartner() {
-        return partner.getValue();
+        return partner;
     }
 
     public void setPartner(int partner) {
-        this.partner = new SimpleIntegerProperty(partner);
+        this.partner = partner;
     }
 
     public String getDescription() {
-        return description.toString();
+        return description;
     }
 
     public void setDescription(String description) {
-        this.description = new SimpleStringProperty(description);
+        this.description = description;
     }
 
     public Date getConclusion() {
@@ -64,10 +64,10 @@ public class Contract {
     }
 
     public double getCost() {
-        return cost.doubleValue();
+        return cost;
     }
 
     public void setCost(double cost) {
-        this.cost = new SimpleDoubleProperty(cost);
+        this.cost = cost;
     }
 }

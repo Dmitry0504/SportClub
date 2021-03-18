@@ -98,7 +98,7 @@ public class ContractsRequest {
         cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
         tableView.getColumns().add(cost);
 
-        tableView.setPrefWidth(500);
+        tableView.setPrefWidth(573);
 
         tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

@@ -135,14 +135,12 @@ public class NewContractController {
                 preparedStatement.setString(4, sportsmanBirthday.getText().trim());
                 preparedStatement.setString(5, sportsmanTelephone.getText().trim());
 
-
                 preparedStatement.executeUpdate();
 
                 preparedStatement.close();
 
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
-                //StandardRequest.refreshAll();
-                //Controller.refreshConnection();
+                MainSceneController.standardRequest.refreshAll();
                 //возвращаемся на предыдущую страницу
                 returnToPrevStage();
             } catch (SQLException e) {

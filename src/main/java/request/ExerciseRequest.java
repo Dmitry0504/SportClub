@@ -19,9 +19,9 @@ import java.sql.SQLException;
 public class ExerciseRequest {
     private static Connection connection = Controller.getConnection();
 
-    private static ObservableList<Exercise> exercises = FXCollections.observableArrayList();
+    private ObservableList<Exercise> exercises = FXCollections.observableArrayList();
 
-    private static ObservableList<Exercise> getExercises(){
+    private ObservableList<Exercise> getExercises(){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM exercise ORDER BY id");
 
@@ -41,7 +41,7 @@ public class ExerciseRequest {
         return exercises;
     }
 
-    static TableView<Exercise> createTBExercise(){
+    TableView<Exercise> createTBExercise(){
         TableView<Exercise> tableView = new TableView<>(getExercises());
 
         TableColumn<Exercise, Integer> id = new TableColumn<>("id");

@@ -17,9 +17,9 @@ import java.sql.*;
 public class TimeTableRequest {
     private static Connection connection = Controller.getConnection();
 
-    private static ObservableList<TimeTable> timeTables = FXCollections.observableArrayList();
+    private ObservableList<TimeTable> timeTables = FXCollections.observableArrayList();
 
-    private static ObservableList<TimeTable> getTimeTables(){
+    private ObservableList<TimeTable> getTimeTables(){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM timetable ORDER BY id");
 
@@ -43,7 +43,7 @@ public class TimeTableRequest {
         return timeTables;
     }
 
-    static TableView<TimeTable> createTBTimeTable(){
+    TableView<TimeTable> createTBTimeTable(){
         TableView<TimeTable> tableView = new TableView<>(getTimeTables());
 
         TableColumn<TimeTable, Integer> id = new TableColumn<>("id");
