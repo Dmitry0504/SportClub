@@ -2,12 +2,8 @@
  * Sample Skeleton for 'addingScene.fxml' Controller Class
  */
 
-package sample;
+package sample.add_controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.*;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +12,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import request.StandardRequest;
+import support.AlertWindow;
+import sample.Controller;
+import sample.MainSceneController;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class NewContractController {
     private static Connection connection = Controller.getConnection();

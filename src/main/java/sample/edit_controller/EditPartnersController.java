@@ -4,10 +4,8 @@
 
 package sample.edit_controller;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -15,8 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import request.StandardRequest;
-import sample.AlertWindow;
+import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
 
@@ -70,7 +67,7 @@ public class EditPartnersController {
             try {
                 PreparedStatement preparedStatement;
 
-                //запрос для изменения сведения о договоре
+                //запрос для изменения сведений о партнере
                 preparedStatement = connection.prepareStatement(
                         "UPDATE partners SET surname = ?, name = ?, birthday = ?, telephone = ? WHERE id = ?");
 

@@ -2,13 +2,23 @@ package request;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Sportsman;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Trainer;
 import sample.Controller;
+import sample.edit_controller.EditTrainersController;
+import support.MyContextMenu;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +42,7 @@ public class TrainersRequest {
                         resultSet.getString("surname"),
                         resultSet.getString("name"),
                         resultSet.getDate("birthday"),
-                        resultSet.getInt("telephone")
+                        resultSet.getBigDecimal("telephone")
                 ));
 
             }
@@ -67,6 +77,17 @@ public class TrainersRequest {
         tableView.getColumns().add(telephone);
 
         tableView.setPrefWidth(573);
+
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (tableView.getSelectionModel().getSelectedItem() != null) {
+                    tableView.setContextMenu(MyContextMenu.trainersContext());
+                    int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
+                    EditTrainersController.setTrainer_id(lineNumber);
+                }
+            }
+        });
         return tableView;
     }
 }

@@ -1,15 +1,16 @@
 package model;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 public class Trainer {
     private int id;
     private String surname;
     private String name;
     private Date birthday;
-    private int telephone;
+    private BigDecimal telephone;
 
-    public Trainer(int id, String surname, String name, Date birthday, int telephone) {
+    public Trainer(int id, String surname, String name, Date birthday, BigDecimal telephone) {
         this.id = id;
         this.surname = surname;
         this.name = name;
@@ -49,11 +50,11 @@ public class Trainer {
         this.birthday = birthday;
     }
 
-    public int getTelephone() {
+    public BigDecimal getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(BigDecimal telephone) {
         this.telephone = telephone;
     }
 }

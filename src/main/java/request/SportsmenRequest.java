@@ -2,11 +2,16 @@ package request;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import model.Sportsman;
 import sample.Controller;
+import sample.edit_controller.EditSportsmenController;
+import support.MyContextMenu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -65,6 +70,18 @@ public class SportsmenRequest {
         tableView.getColumns().add(telephone);
 
         tableView.setPrefWidth(573);
+
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (tableView.getSelectionModel().getSelectedItem() != null) {
+                    tableView.setContextMenu(MyContextMenu.sportsmanContext());
+
+                    int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
+                    EditSportsmenController.setSportsman_id(lineNumber);
+                }
+            }
+        });
         return tableView;
     }
 }

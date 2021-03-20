@@ -14,13 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Partner;
-import model.Trainer;
 import sample.Controller;
-import sample.edit_controller.EditContractController;
 import sample.edit_controller.EditPartnersController;
+import support.MyContextMenu;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,31 +86,10 @@ public class PartnerRequest {
         tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                    if(mouseEvent.getClickCount() == 1){
-                        int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
-                        String lastName = tableView.getSelectionModel().getSelectedItem().getSurname();
-                        String firstName = tableView.getSelectionModel().getSelectedItem().getName();
-                        Date birthday = tableView.getSelectionModel().getSelectedItem().getBirthday();
-                        BigDecimal telephone = tableView.getSelectionModel().getSelectedItem().getTelephone();
-                        EditPartnersController.setContragentID(lineNumber);
-
-                    }
-                    if(mouseEvent.getClickCount() == 2){
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                                "/additionalScenes/editPartners.fxml"));
-                        Parent root1;
-                        try {
-                            root1 = fxmlLoader.load();
-                            Stage addStage = new Stage();
-                            addStage.initModality(Modality.WINDOW_MODAL);
-                            addStage.setTitle("Изменение данных контрагента");
-                            addStage.setScene(new Scene(root1));
-                            addStage.show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                if (tableView.getSelectionModel().getSelectedItem() != null) {
+                    tableView.setContextMenu(MyContextMenu.partnerContext());
+                    int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
+                    EditPartnersController.setContragentID(lineNumber);
                 }
             }
         });

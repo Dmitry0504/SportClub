@@ -2,16 +2,26 @@ package request;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.Exercise;
 import model.TimeTable;
 import sample.Controller;
+import sample.edit_controller.EditTimeTableController;
+import support.MyContextMenu;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class TimeTableRequest {
@@ -92,6 +102,18 @@ public class TimeTableRequest {
         tableView.getColumns().add(exercise_id);
 
         tableView.setPrefWidth(573);
+
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (tableView.getSelectionModel().getSelectedItem() != null) {
+                    tableView.setContextMenu(MyContextMenu.timeTableContext());
+                    int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
+                    EditTimeTableController.setId(lineNumber);
+                }
+            }
+        });
+
         return tableView;
     }
 

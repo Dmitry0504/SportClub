@@ -4,27 +4,17 @@
 
 package sample.edit_controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Contract;
-import request.ContractsRequest;
-import request.StandardRequest;
-import sample.AlertWindow;
+import support.AlertWindow;
 import sample.Controller;
-import sample.Main;
 import sample.MainSceneController;
 
 public class EditContractController {

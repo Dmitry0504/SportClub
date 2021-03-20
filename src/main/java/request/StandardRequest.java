@@ -1,22 +1,9 @@
 package request;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
-import sample.Controller;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
 
 public class StandardRequest {
-
-    private static Connection connection = Controller.getConnection();
 
     private TableView<Sportsman> sportsmanTableView = new SportsmenRequest().createTBSportsmen();
     private TableView<Trainer> trainerTableView = new TrainersRequest().createTBTrainers();
@@ -24,6 +11,7 @@ public class StandardRequest {
     private TableView<Partner> partnerTableView = new PartnerRequest().createTBPartners();
     private TableView<TimeTable> timeTableTableView = new TimeTableRequest().createTBTimeTable();
     private TableView<Contract> contractTableView = new ContractsRequest().createTBContracts();
+    private TableView<PersonalTimeTable> personalTimeTableTableView = new PersonalTimeTableRequest().createTBPersonalTimeTable();
 
     public void refreshAll(){
         refreshContractTableView();
@@ -32,6 +20,11 @@ public class StandardRequest {
         refreshPartnerTableView();
         refreshSportsmanTableView();
         refreshTrainerTableView();
+        refreshPersonalTimeTableTableView();
+    }
+
+    public void refreshPersonalTimeTableTableView() {
+        personalTimeTableTableView = new PersonalTimeTableRequest().createTBPersonalTimeTable();
     }
 
     public void refreshTimeTableTableView() {
@@ -56,6 +49,10 @@ public class StandardRequest {
 
     public void refreshPartnerTableView() {
         partnerTableView = new PartnerRequest().createTBPartners();
+    }
+
+    public TableView<PersonalTimeTable> getPersonalTimeTableTableView() {
+        return personalTimeTableTableView;
     }
 
     public TableView<Contract> getContractTableView() {

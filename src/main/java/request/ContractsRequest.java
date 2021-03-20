@@ -19,6 +19,7 @@ import javafx.util.Callback;
 import model.Contract;
 import sample.Controller;
 import sample.edit_controller.EditContractController;
+import support.MyContextMenu;
 
 import java.io.IOException;
 import java.sql.*;
@@ -103,26 +104,10 @@ public class ContractsRequest {
         tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                    if(mouseEvent.getClickCount() == 1){
-                        int i = tableView.getSelectionModel().getSelectedItem().getNumber();
-                        EditContractController.setNumber(i);
-                    }
-                    if(mouseEvent.getClickCount() == 2){
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/additionalScenes/editContract.fxml"));
-                        Parent root1;
-                        try {
-                            root1 = fxmlLoader.load();
-                            Stage addStage = new Stage();
-                            addStage.initModality(Modality.WINDOW_MODAL);
-                            addStage.setTitle("Изменение договора");
-                            addStage.setScene(new Scene(root1));
-                            addStage.show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
+                if(tableView.getSelectionModel().getSelectedItem() != null){
+                    tableView.setContextMenu(MyContextMenu.contractContext());
+                    int i = tableView.getSelectionModel().getSelectedItem().getNumber();
+                    EditContractController.setNumber(i);
                 }
             }
         });

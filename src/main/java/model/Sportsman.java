@@ -2,7 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 
 public class Sportsman {
     private int id;

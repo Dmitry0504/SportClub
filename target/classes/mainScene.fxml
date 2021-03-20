@@ -16,12 +16,17 @@
                   <Font name="Times New Roman Bold Italic" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="editBtn" layoutX="5.0" layoutY="267.0" mnemonicParsing="false" text="Изменить договор">
+            <Button fx:id="addTrainerBtn" layoutX="5.0" layoutY="267.0" mnemonicParsing="false" text="Добавить тренера">
                <font>
                   <Font name="Times New Roman Bold Italic" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="deleteBtn" layoutX="9.0" layoutY="295.0" mnemonicParsing="false" text="Удалить договор">
+            <Button fx:id="addTrainingBtn" layoutX="5.0" layoutY="296.0" mnemonicParsing="false" text="Добавить занятие в расписание">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="signBtn" layoutX="5.0" layoutY="328.0" mnemonicParsing="false" text="Записать на занятие">
                <font>
                   <Font name="Times New Roman Bold Italic" size="12.0" />
                </font>
