@@ -126,6 +126,9 @@ public class EditContractController {
         i = x;
     }
 
+    public static int getNumber(){
+        return i;
+    }
     private void setTextInput(){
         contractDescription.setText(
                 MainSceneController.standardRequest.getContractTableView().getSelectionModel().getSelectedItem().getDescription());

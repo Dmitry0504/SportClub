@@ -124,6 +124,10 @@ public class EditPartnersController {
         return true;
     }
 
+    public static int getContragentID() {
+        return contragent_id;
+    }
+
     public static void setContragentID(int lineNumber) {
         EditPartnersController.contragent_id = lineNumber;
     }

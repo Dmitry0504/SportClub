@@ -159,6 +159,7 @@ public class NewContractController {
     //вовращает на предыдущую страницу
     private void returnToPrevStage(){
         Stage stage = (Stage) createBtn.getScene().getWindow();
+        stage.close();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mainScene.fxml"));
         Parent root1;
         try {

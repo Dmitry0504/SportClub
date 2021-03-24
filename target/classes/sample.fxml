@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <AnchorPane prefHeight="110.0" prefWidth="600.0" style="-fx-background-color: #307672;">
          <children>
@@ -33,6 +33,11 @@
                </font>
             </Label>
             <Button fx:id="nextBtn" layoutX="321.0" layoutY="164.0" mnemonicParsing="false" style="-fx-background-color: e4eddb;" text="Далее">
+               <font>
+                  <Font name="Times New Roman Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="helpBtn" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" style="-fx-background-color: e4eddb;" text="О программе">
                <font>
                   <Font name="Times New Roman Bold Italic" size="14.0" />
                </font>

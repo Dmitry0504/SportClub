@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.AlertWindow;
@@ -46,15 +47,21 @@ public class Controller {
     @FXML
     private Button nextBtn;
 
+    @FXML
+    private Button helpBtn;
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        inputLogin.setTooltip(new Tooltip("Введите сюда свой логин"));
+        inputPassword.setTooltip(new Tooltip("Введите сюда свой пароль"));
         login = inputLogin.getText();
         password = inputPassword.getText();
 
         nextBtn.setOnAction(actionEvent -> {
 
             try {
-                connectBD();
+                //connectBD();
+                connection = Connector.getNewConnection(inputLogin.getText().trim(), inputPassword.getText().trim());
             } catch (SQLException e) {
                 AlertWindow.showAlertWithoutHeaderText("Проверьте введенные данные!");
                 return;
@@ -76,12 +83,18 @@ public class Controller {
             }
         });
 
+        helpBtn.setOnAction(actionEvent -> {
+            AlertWindow.showAlertWithoutHeaderText("Программа создана для работы с базой данных 'Спортклуб'.\n" +
+                    "Для входа в систему используйте логин и пароль выданные администратором.\n" +
+                    "Спасибо за использование отечественного программного обеспечения!");
+        });
+
     }
 
-    private static void connectBD() throws SQLException {
-        if(connection != null)
-            connection.close();
-        connection = Connector.getNewConnection();
-    }
+//    private static void connectBD() throws SQLException {
+//        if(connection != null)
+//            connection.close();
+//        connection = Connector.getNewConnection();
+//    }
 
 }

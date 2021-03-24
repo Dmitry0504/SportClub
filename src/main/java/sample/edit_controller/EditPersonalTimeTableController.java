@@ -101,6 +101,10 @@ public class EditPersonalTimeTableController {
         return true;
     }
 
+    public static int getId(){
+        return id;
+    }
+
     public static void setId(int x){
         id = x;
     }

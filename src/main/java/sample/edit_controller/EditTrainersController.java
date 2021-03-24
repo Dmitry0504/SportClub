@@ -123,6 +123,10 @@ public class EditTrainersController {
         return true;
     }
 
+    public static int getTrainer_id() {
+         return trainer_id;
+    }
+
     public static void setTrainer_id(int lineNumber) {
         EditTrainersController.trainer_id = lineNumber;
     }

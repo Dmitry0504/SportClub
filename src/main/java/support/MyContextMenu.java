@@ -3,12 +3,15 @@ package support;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Controller;
-import sample.edit_controller.EditSportsmenController;
+import sample.MainSceneController;
+import sample.edit_controller.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,6 +19,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ Класс создает контекстное меню для записей в таблицах и
+ устанавливает обработчики для каждого пункта меню
+ */
 public class MyContextMenu {
     private static Connection connection = Controller.getConnection();
     private static FXMLLoader fxmlLoader;
@@ -24,7 +31,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, info, delete);
 
         info.setOnAction(e ->{
             try {
@@ -71,6 +79,32 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вместе с этой записью вы также удалите сведения о договоре и контрагенте.\n" +
+                            "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from partners where id = (select partner from contracts where number = ?);");
+
+                    preparedStatement.setInt(1, EditSportsmenController.getSportsman_id());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                }catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+
+
+        });
+
         return contextMenu;
     }
 
@@ -78,7 +112,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource("/additionalScenes/edit_scenes/editContract.fxml"));
@@ -95,6 +130,30 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вместе с этой записью вы также удалите сведения о спортсмене и контрагенте.\n" +
+                            "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from partners where id = (select partner from contracts where number = ?);");
+
+                    preparedStatement.setInt(1, EditContractController.getNumber());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         return contextMenu;
     }
 
@@ -102,7 +161,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource(
@@ -120,6 +180,30 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вместе с этой записью вы также удалите сведения о спортсмене и договоре.\n" +
+                            "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from partners where id = ?;");
+
+                    preparedStatement.setInt(1, EditPartnersController.getContragentID());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         return contextMenu;
     }
 
@@ -127,7 +211,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource(
@@ -145,6 +230,29 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from personal_timetable where id = ?;");
+
+                    preparedStatement.setInt(1, EditPersonalTimeTableController.getId());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         return contextMenu;
     }
 
@@ -152,7 +260,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource(
@@ -170,6 +279,29 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from timetable where id = ?;");
+
+                    preparedStatement.setInt(1, EditTimeTableController.getId());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         return contextMenu;
     }
 
@@ -177,7 +309,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource(
@@ -195,6 +328,29 @@ public class MyContextMenu {
             }
         });
 
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from trainers where id = ?;");
+
+                    preparedStatement.setInt(1, EditTrainersController.getTrainer_id());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         return contextMenu;
     }
 
@@ -202,7 +358,8 @@ public class MyContextMenu {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
-        contextMenu.getItems().addAll(change, info);
+        MenuItem delete = new MenuItem("Удалить");
+        contextMenu.getItems().addAll(change, delete, info);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource(
@@ -217,6 +374,29 @@ public class MyContextMenu {
                 addStage.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        delete.setOnAction(e ->{
+            Alert alert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Вы действительно хотите удалить выбранную запись?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(
+                            "delete from exercise where id = ?;");
+
+                    preparedStatement.setInt(1, EditExerciseController.getId());
+
+                    preparedStatement.executeUpdate();
+                    MainSceneController.standardRequest.refreshAll();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
             }
         });
 

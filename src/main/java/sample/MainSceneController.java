@@ -49,6 +49,9 @@ public class MainSceneController {
     @FXML // fx:id="signBtn"
     private Button signBtn; // Value injected by FXMLLoader
 
+    @FXML
+    private Button helpBtn2;
+
     private TableView<?> tb;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -204,6 +207,18 @@ public class MainSceneController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });
+
+        helpBtn2.setOnAction(actionEvent -> {
+            AlertWindow.showAlertWithoutHeaderText("В окне слева выберете интересующую Вас таблицу и\n" +
+                    "в окне справа отобразится её содержимое,\n" +
+                    "для изменения, удаления и получения дополнительной информации о записи\n" +
+                    "вызовите контекстное меню нажав ПКМ на интересующей записи.\n" +
+                    "Для добавления новых спортсменов, занятий, тренеров, записей в расписание\n" +
+                    "воспользуйтесь соответствующими кнопками.\n" +
+                    "Для обновления содержимого таблицы переместитесь между вкладками\n" +
+                    "и откройте интересующую Вас таблицу вновь.\n" +
+                    "Для получения более подробной информации обращайтесь к Вашему администратору.");
         });
     }
 
