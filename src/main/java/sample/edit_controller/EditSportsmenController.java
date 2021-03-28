@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
@@ -20,6 +21,7 @@ import sample.MainSceneController;
 public class EditSportsmenController {
     private static Connection connection = Controller.getConnection();
     private static int sportsman_id;
+    private static final Logger logger = Logger.getLogger(EditSportsmenController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -83,9 +85,10 @@ public class EditSportsmenController {
                 MainSceneController.standardRequest.refreshSportsmanTableView();
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно обновлены!");
 
+                logger.info("Обновлены данные спортсмена " + sportsman_id);
                 stage.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 AlertWindow.showAlertWithoutHeaderText("Если вы видете это сообщение, то обратитесь к администратору!");
             }
         }

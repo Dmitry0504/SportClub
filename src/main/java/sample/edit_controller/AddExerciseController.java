@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'editPersonalTimeTable.fxml' Controller Class
+ * Sample Skeleton for 'addExercise.fxml' Controller Class
  */
 
 package sample.edit_controller;
@@ -11,17 +11,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
-import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
+import support.AlertWindow;
 
-public class EditPersonalTimeTableController {
-    private static int id;
+public class AddExerciseController {
     private Connection connection = Controller.getConnection();
-    private static final Logger logger = Logger.getLogger(EditPersonalTimeTableController.class);
+    private static final Logger logger = Logger.getLogger(AddExerciseController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -32,20 +32,19 @@ public class EditPersonalTimeTableController {
     @FXML // fx:id="acceptBtn"
     private Button acceptBtn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="exerciseID"
-    private TextField exerciseID; // Value injected by FXMLLoader
+    @FXML // fx:id="exerciseDescription"
+    private TextArea exerciseDescription; // Value injected by FXMLLoader
 
-    @FXML // fx:id="sportsmanID"
-    private TextField sportsmanID; // Value injected by FXMLLoader
+    @FXML // fx:id="title"
+    private TextField title; // Value injected by FXMLLoader
 
     @FXML // fx:id="cancelBtn"
     private Button cancelBtn; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        setTextInput();
         acceptBtn.setOnAction(actionEvent -> {
-            editContract();
+            addContract();
         });
         cancelBtn.setOnAction(actionEvent ->{
             Stage stage = (Stage) cancelBtn.getScene().getWindow();
@@ -54,7 +53,7 @@ public class EditPersonalTimeTableController {
     }
 
     //изменяем договор
-    private void editContract(){
+    private void addContract(){
         //проверяем ввод, если все нормально, то продолжаем
         if(checkingInput()) {
             Stage stage = (Stage) acceptBtn.getScene().getWindow();
@@ -63,19 +62,18 @@ public class EditPersonalTimeTableController {
 
                 //запрос для изменения сведения о договоре
                 preparedStatement = connection.prepareStatement(
-                        "UPDATE personal_timetable SET sportsmen_id = ?, training_id = ? WHERE id = ?");
+                        "INSERT INTO exercise(title, description) VALUES (?, ?)");
 
-                preparedStatement.setString(1, sportsmanID.getText().trim());
-                preparedStatement.setString(2, exerciseID.getText().trim());
-                preparedStatement.setString(3, String.valueOf(id));
+                preparedStatement.setString(1, title.getText().trim());
+                preparedStatement.setString(2, exerciseDescription.getText().trim());
                 preparedStatement.executeUpdate();
 
                 preparedStatement.close();
 
-                MainSceneController.standardRequest.refreshPersonalTimeTableTableView();
-                AlertWindow.showAlertWithoutHeaderText("Данные успешно обновлены!");
+                MainSceneController.standardRequest.refreshExerciseTableView();
+                AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
 
-                logger.info("Обновлены данные по записи спортсмена " + id);
+                logger.info("Добавлено упражнение " + title.getText().trim());
                 stage.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
@@ -88,34 +86,19 @@ public class EditPersonalTimeTableController {
     //и выводим сообщение в случае ошибки во введенных данных
     public boolean checkingInput(){
         //проверка данных о занятии
-        String sportsmen_id = sportsmanID.getText();
-        if(!sportsmen_id.matches("^\\d+\\b")){
+        String description = exerciseDescription.getText();
+        if(description.isEmpty()){
             AlertWindow.showAlertWithoutHeaderText(
-                    "Проверьте поле 'id члена клуба'!\nПоле должно содержать только цифры!");
+                    "Поле 'Описание' не должно быть пустым!");
             return false;
         }
-        String training_id = exerciseID.getText();
-        if(!training_id.matches("^\\d+\\b")){
+        String exerciseTitle = title.getText();
+        if(exerciseTitle.isEmpty()){
             AlertWindow.showAlertWithoutHeaderText(
-                    "Проверьте поле 'id занятия'!\nПоле должно содержать только цифры!");
+                    "Поле 'Название' не должно быть пустым!");
             return false;
         }
 
         return true;
-    }
-
-    public static int getId(){
-        return id;
-    }
-
-    public static void setId(int x){
-        id = x;
-    }
-
-    private void setTextInput(){
-        exerciseID.setText(String.valueOf(
-                MainSceneController.standardRequest.getPersonalTimeTableTableView().getSelectionModel().getSelectedItem().getTraining_id()));
-        sportsmanID.setText(String.valueOf(
-                MainSceneController.standardRequest.getPersonalTimeTableTableView().getSelectionModel().getSelectedItem().getSportsmen_id()));
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
@@ -26,6 +27,7 @@ import java.util.ResourceBundle;
 
 public class NewContractController {
     private static Connection connection = Controller.getConnection();
+    private static final Logger logger = Logger.getLogger(NewContractController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -146,11 +148,13 @@ public class NewContractController {
                 preparedStatement.close();
 
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
+
+                logger.info("Добавлен новый договор. Спортсмен: " + sportsmanSurname.getText().trim() + " " + sportsmanName.getText().trim());
                 MainSceneController.standardRequest.refreshAll();
                 //возвращаемся на предыдущую страницу
                 returnToPrevStage();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 AlertWindow.showAlertWithoutHeaderText("Если вы видете это сообщение, то обратитесь к администратору!");
             }
         }

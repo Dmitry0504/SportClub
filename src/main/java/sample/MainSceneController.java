@@ -50,6 +50,9 @@ public class MainSceneController {
     private Button signBtn; // Value injected by FXMLLoader
 
     @FXML
+    private Button addExBtn;
+
+    @FXML
     private Button helpBtn2;
 
     private TableView<?> tb;
@@ -202,6 +205,22 @@ public class MainSceneController {
                 Stage addStage = new Stage();
                 addStage.initModality(Modality.WINDOW_MODAL);
                 addStage.setTitle("Записать на занятие");
+                addStage.setScene(new Scene(root1));
+                addStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        addExBtn.setOnAction(actionEvent -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+                    "/additionalScenes/add_scenes/addExercise.fxml"));
+            Parent root1;
+            try {
+                root1 = fxmlLoader.load();
+                Stage addStage = new Stage();
+                addStage.initModality(Modality.WINDOW_MODAL);
+                addStage.setTitle("Добавить новое занятие");
                 addStage.setScene(new Scene(root1));
                 addStage.show();
             } catch (IOException e) {

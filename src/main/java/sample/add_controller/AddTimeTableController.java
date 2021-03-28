@@ -14,12 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
 
 public class AddTimeTableController {
     private Connection connection = Controller.getConnection();
+    private static final Logger logger = Logger.getLogger(AddTimeTableController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -83,6 +85,10 @@ public class AddTimeTableController {
                 MainSceneController.standardRequest.refreshTimeTableTableView();
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
 
+                logger.info("Добавлена запись: "
+                        + exerciseDate.getText().trim() + " "
+                        + exerciseTime.getText().trim() + " "
+                        + exerciseDescription.getText().trim());
                 stage.close();
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -13,12 +13,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import support.AlertWindow;
 import sample.Controller;
 import sample.MainSceneController;
 
 public class AddTrainersController {
     private Connection connection = Controller.getConnection();
+    private static final Logger logger = Logger.getLogger(AddTrainersController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -80,9 +82,10 @@ public class AddTrainersController {
                 MainSceneController.standardRequest.refreshTrainerTableView();
                 AlertWindow.showAlertWithoutHeaderText("Данные успешно добавлены!");
 
+                logger.info("Добавлен тренер: " + trainerSurname.getText().trim() + " " + trainerName.getText().trim());
                 stage.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 AlertWindow.showAlertWithoutHeaderText("Если вы видете это сообщение, то обратитесь к администратору!");
             }
         }

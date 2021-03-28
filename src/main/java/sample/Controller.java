@@ -20,11 +20,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import support.AlertWindow;
 
 public class Controller {
     private static String login;
     private static String password;
+    private static final Logger logger = Logger.getLogger(Controller.class);
 
     private static Connection connection;
 
@@ -62,8 +64,10 @@ public class Controller {
             try {
                 //connectBD();
                 connection = Connector.getNewConnection(inputLogin.getText().trim(), inputPassword.getText().trim());
+                logger.info(inputLogin.getText() + " вошел в систему");
             } catch (SQLException e) {
                 AlertWindow.showAlertWithoutHeaderText("Проверьте введенные данные!");
+                logger.error("Введены неверные данные!");
                 return;
             }
 
