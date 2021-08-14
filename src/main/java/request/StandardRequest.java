@@ -3,6 +3,8 @@ package request;
 import javafx.scene.control.TableView;
 import model.*;
 
+import java.sql.SQLException;
+
 public class StandardRequest {
 
     private TableView<Sportsman> sportsmanTableView = new SportsmenRequest().createTBSportsmen();
@@ -77,6 +79,10 @@ public class StandardRequest {
 
     public TableView<Trainer> getTrainerTableView(){
         return trainerTableView;
+    }
+
+    public TableView<Sportsman> getSearchingSportsmanTableView(String sportsmanSurname) throws SQLException {
+        return new SportsmenRequest().searchSportsman(sportsmanSurname);
     }
 
 }

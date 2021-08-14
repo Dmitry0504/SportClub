@@ -84,4 +84,68 @@ public class SportsmenRequest {
         });
         return tableView;
     }
+
+    TableView<Sportsman> searchSportsman(String sportsmanSurname) throws SQLException {
+        PreparedStatement preparedStatement;
+
+        //запрос для получения сведений о спортсмене
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM sportsmen WHERE surname = ?");
+
+        preparedStatement.setString(1, sportsmanSurname);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        resultSet.next();
+        Sportsman sportsman = new Sportsman(
+                resultSet.getInt("id"),
+                resultSet.getString("surname"),
+                resultSet.getString("name"),
+                resultSet.getDate("birthday"),
+                resultSet.getBigDecimal("telephone")
+        );
+
+        preparedStatement.close();
+
+        ObservableList<Sportsman> sportsmen = FXCollections.observableArrayList();
+        sportsmen.add(sportsman);
+
+        TableView<Sportsman> tableView = new TableView<>(sportsmen);
+
+        TableColumn<Sportsman, Integer> id = new TableColumn<>("id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableView.getColumns().add(id);
+
+        TableColumn<Sportsman, String> surname = new TableColumn<>("Фамилия");
+        surname.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        tableView.getColumns().add(surname);
+
+        TableColumn<Sportsman, String> name = new TableColumn<>("Имя");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableView.getColumns().add(name);
+
+        TableColumn<Sportsman, Date> birthday = new TableColumn<>("Дата рождения");
+        birthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        tableView.getColumns().add(birthday);
+
+        TableColumn<Sportsman, Integer> telephone = new TableColumn<>("Телефон");
+        telephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        tableView.getColumns().add(telephone);
+
+        tableView.setPrefWidth(573);
+
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (tableView.getSelectionModel().getSelectedItem() != null) {
+                    tableView.setContextMenu(MyContextMenu.sportsmanContext());
+
+                    int lineNumber = tableView.getSelectionModel().getSelectedItem().getId();
+                    EditSportsmenController.setSportsman_id(lineNumber);
+                }
+            }
+        });
+        return tableView;
+
+    }
 }

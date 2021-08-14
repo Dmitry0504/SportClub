@@ -3,22 +3,15 @@ package request;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import model.Partner;
 import sample.Controller;
 import sample.edit_controller.EditPartnersController;
 import support.MyContextMenu;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,15 +19,11 @@ import java.sql.SQLException;
 import java.sql.Date;
 
 public class PartnerRequest {
-    //запрос полной инфы по спортсмену(договору)
-    //select partners.id, partners.surname, partners.name, contracts.description,
-    // contracts.cost, contracts.conclusion, contracts.ending, sportsmen.surname,
-    // sportsmen.name, sportsmen.id from partners join contracts on partners.id = contracts.partner
-    // join sportsmen on contracts.number = sportsmen.id where sportsmen.id = 1;
+    //получаем соединение с базой данных от класса контроллера окна авторизации
     private static Connection connection = Controller.getConnection();
-
+    //инициализация списка контрагентов
     private ObservableList<Partner> partners = FXCollections.observableArrayList();
-
+    //получение данных из БД и заполнение списка
     private ObservableList<Partner> getPartners(){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM partners ORDER BY id");
@@ -56,7 +45,7 @@ public class PartnerRequest {
         }
         return partners;
     }
-
+    //создание табличного представления
     TableView<Partner> createTBPartners(){
         TableView<Partner> tableView = new TableView<>(getPartners());
 

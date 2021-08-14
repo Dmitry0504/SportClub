@@ -62,7 +62,6 @@ public class Controller {
         nextBtn.setOnAction(actionEvent -> {
 
             try {
-                //connectBD();
                 connection = Connector.getNewConnection(inputLogin.getText().trim(), inputPassword.getText().trim());
                 logger.info(inputLogin.getText() + " вошел в систему");
             } catch (SQLException e) {
@@ -95,10 +94,5 @@ public class Controller {
 
     }
 
-//    private static void connectBD() throws SQLException {
-//        if(connection != null)
-//            connection.close();
-//        connection = Connector.getNewConnection();
-//    }
 
 }

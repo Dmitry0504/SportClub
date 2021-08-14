@@ -110,10 +110,9 @@ public class MyContextMenu {
 
     public static ContextMenu contractContext() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem info = new MenuItem("Дополнительно");
         MenuItem change = new MenuItem("Изменить");
         MenuItem delete = new MenuItem("Удалить");
-        contextMenu.getItems().addAll(change, delete, info);
+        contextMenu.getItems().addAll(change, delete);
 
         change.setOnAction(e ->{
             fxmlLoader = new FXMLLoader(MyContextMenu.class.getResource("/additionalScenes/edit_scenes/editContract.fxml"));

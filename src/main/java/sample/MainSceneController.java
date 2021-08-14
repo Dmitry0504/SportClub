@@ -6,6 +6,7 @@ package sample;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -54,6 +55,12 @@ public class MainSceneController {
 
     @FXML
     private Button helpBtn2;
+
+    @FXML
+    private Button searchBtn;
+
+    @FXML
+    private TextField searchInput;
 
     private TableView<?> tb;
 
@@ -238,6 +245,25 @@ public class MainSceneController {
                     "Для обновления содержимого таблицы переместитесь между вкладками\n" +
                     "и откройте интересующую Вас таблицу вновь.\n" +
                     "Для получения более подробной информации обращайтесь к Вашему администратору.");
+        });
+
+
+        searchBtn.setOnAction(actionEvent -> {
+            ouputLayout.getChildren().clear();
+            try {
+                if(!searchInput.getText().matches("^\\D+\\b"))
+                    AlertWindow.showAlertWithoutHeaderText(
+                            "Поле не должно содержать цифр и не должно быть пустым!");
+                tb = standardRequest.getSearchingSportsmanTableView(searchInput.getText());
+            } catch (SQLException e) {
+                AlertWindow.showAlertWithoutHeaderText(
+                        "Поиск не дал результатов...");
+            }
+            if(tb.getItems().isEmpty()){
+                AlertWindow.showAlertWithoutHeaderText("Таблица пуста");
+                return;
+            }
+            ouputLayout.getChildren().add(tb);
         });
     }
 

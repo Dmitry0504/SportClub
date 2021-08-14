@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Date;
 
 public class Sportsman {
@@ -11,6 +10,7 @@ public class Sportsman {
     private Date birthday;
     private BigDecimal telephone;
 
+    //конструктор класса
     public Sportsman(int id, String surname, String name, Date birthday, BigDecimal telephone) {
         this.id = id;
         this.surname = surname;
@@ -19,6 +19,7 @@ public class Sportsman {
         this.telephone = telephone;
     }
 
+    //методы получения и редактирования полей объекта
     public int getId() {
         return id;
     }

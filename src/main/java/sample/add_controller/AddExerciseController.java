@@ -2,7 +2,7 @@
  * Sample Skeleton for 'addExercise.fxml' Controller Class
  */
 
-package sample.edit_controller;
+package sample.add_controller;
 
 import java.net.URL;
 import java.sql.Connection;
